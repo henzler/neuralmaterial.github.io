@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Neuralmaterial </title>
+    </head>
+    <body>
+
+        <div style="text-align:center">
+            <h1> Supplemental: Generative Modelling of BRDF Textures from Flash Images </h1>
+            <h1> SIGGRAPH Asia 2021 </h1>
+            <h2> <a href="https://henzler.github.io/">Philipp Henzler </a> <sup>1</sup>, <a href="https://valentin.deschaintre.fr/">Valentin Deschaintre </a> <sup>2,3</sup>, <a href="http://www0.cs.ucl.ac.uk/staff/n.mitra/">Niloy J. Mitra </a> <sup>1,2</sup>, <a href="http://www.homepages.ucl.ac.uk/~ucactri/">Tobias Ritschel </a> <sup>1</sup> </h2>
+            <h2> <sup>1</sup> University College London, <sup>2</sup>Adobe Research, <sup>3</sup>Imperial College London </h2>
+
+            <h3> Choose result type </h3>
+
+            <div>
+                <label style="cursor: pointer;"><input id="iResynthesis" type="radio" name="resultType" value="resynthesis" style="cursor: pointer;" checked> Resynthesis (synthesis given input image) </label>
+            <div>
+            <div>
+                <label style="cursor: pointer;"><input id="iGeneration" type="radio" name="resultType" value="generation" style="cursor: pointer;"> Generation (randomly sample latent space) </label>
+            </div>
+
+            <div id="resynthesis">
+                <h3> Resynthesis results </h3>
+<!--                <h4> Click on result images for more details </h4>-->
+            </div>
+
+            <div id="generation">
+                <h3> Generation results</h3>
+<!--                <h4> Click on result images for more details </h4>-->
+            </div>
+        </div>
+    </body>
+</html>
+
+<script type="text/javascript" src="scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="results/data.json"></script>
+<script type="text/javascript" src="scripts/index.js"></script>

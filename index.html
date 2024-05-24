@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NeuralMaterials</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/video_comparison.js"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+
+            <h1 class="title is-1 publication-title">Generative Modelling of BRDF Textures from Flash Images</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://henzler.github.io">Philipp Henzler</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://valentin.deschaintre.fr/">Valentin Deschaintre</a><sup>2,3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="http://www0.cs.ucl.ac.uk/staff/n.mitra">Niloy J. Mitra</a><sup>1,2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="http://www.homepages.ucl.ac.uk/~ucactri/">Tobias Ritschel</a><sup>1</sup>,
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University College London</span>,
+              <span class="author-block"><sup>2</sup>Adobe Research</span>
+              <span class="author-block"><sup>3</sup>Imperial College London</span>
+            </div>
+
+            <div class="is-size-5 publication-venue">
+              SIGGRAPH Asia 2021
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="./static/images/Henzler_Neuralmaterials.pdf"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>PDF</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2102.11861" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://youtu.be/Bn52BOiZoH8" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>YouTube 5 min</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="https://youtu.be/_HTiiKxccJ4" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>YouTube 15 min</span>
+                  </a>
+                </span>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="her-body">
+        
+        <h2 class="title is-3 has-text-centered"><a href = "./static/demo/index.html"> Interactive Demo (click here) </a></h2>
+
+        <img src="./static/images/teaser.jpg"
+          class="teaser"
+          alt="Teaser."/>
+
+        <div class="content has-text-justified">
+        <p>
+          We present a novel deep architecture that contributes Warp-conditioned Ray Embedding (WCR) to reconstruct and
+          render new views (right) of object categories from one or few input images (middle). Our model is learned automatically from
+          videos of the objects (left) and works on difficult real data where competitor architectures fail to produce good results
+        </p>
+      </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr />
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <!-- Method -->
+          <h2 class="title is-3">Method</h2>
+          <div class="content has-text-justified">
+            <div class="content has-text-justified">
+              <img src="./static/images/Architecture.jpg"
+                  class="architecture"
+                  alt="Architecture."/>
+            </div>
+            <p>
+              Starting from an exemplar (top-left) our trained encoder encodes the image to a compact latent space variable z.
+              Additionally, a random infinite field is cropped with the same spatial dimensions as the flash input image. The noise crop is then reshaped based on a convolutional U-Net architecture. Each convolution in the network is followed by an Adaptive Instance Normalization (AdaIN) layer reshaping the statistics (mean and standard deviation) of features.
+              A learned affine transformation T per layer maps z to the desired means and sigmas.
+              The output of the network are the diffuse, specular, roughness, normal parameters of an svBRDF that, when rendered using a camera colocated flash light, look the same as the input. Our unsupervised setting allows us to fine-tune our trained network on materials to acquire.
+            </p>
+          </div>
+          
+    
+          
+
+          <!-- Relighting -->
+          <h3 class="title is-4">Relighting</h3>
+          <div class="content has-text-justified">
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered">Input</div>
+              <div class="column has-text-centered">Relit</div>
+            </div>
+            <div class="columns">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/relit_circle.gif"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered">Input</div>
+              <div class="column has-text-centered">Relit</div>
+            </div>
+            <div class="columns">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/relit_circle.gif"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered">Input</div>
+              <div class="column has-text-centered">Relit</div>
+            </div>
+            <div class="columns">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2026/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2026/relit_circle.gif"></div>
+            </div>
+          </div>
+          
+          <!-- Diversity -->
+          <h3 class="title is-4">Diversity</h3>
+          <div class="content has-text-justified">
+            <p>As we can re-seed the input noise our method is capable of producing diverse results.</p>
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered">Input</div>
+              <div class="column has-text-centered">Re-seed</div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/leather_antique/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/assets/antique_leather_seed.gif"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/metal_rust/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/assets/metal_rust_seed.gif"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/tissue/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/assets/tissue.gif"></div>
+            </div>
+
+          </div>
+
+          <!-- Diversity -->
+          <h3 class="title is-4">Infinite spatial domain</h3>
+          <div class="content has-text-justified">
+            <p>Our method allows to genreate infinite spatial fields of BRDF parameters without any border artefacts or 
+              repetitive patterns.</p>
+              <video autoplay loop muted>
+                <source src="./static/assets/infinite.mp4" type="video/mp4">
+                Your browser does not support HTML video.
+              </video>
+          </div>
+
+          <!-- Interpolation -->
+          <h3 class="title is-4">Infinite spatial domain</h3>
+          <div class="content has-text-justified">
+            <p>Our method allows to genreate infinite spatial fields of BRDF parameters without any border artefacts or 
+              repetitive patterns.</p>
+            
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered">Exemplar 1</div>
+              <div class="column has-text-centered">Interpolation</div>
+              <div class="column has-text-centered">Exemplar 2</div>
+            </div>
+            
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/0281/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/assets/leather_black_to_yellow_zig_zag.gif"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/fabric_yellow/image_in.jpg"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/metal_gritty/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/assets/gritty_metal_to_stone.gif"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2038/image_in.jpg"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/metal_black/image_in.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/assets/metal_black_to_marble.gif"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2004/image_in.jpg"></div>
+            </div>
+          </div>
+          
+          <!-- BRDF-decomposition -->
+          <h3 class="title is-4">BRDF Decomposition</h3>
+          <div class="content has-text-justified">
+            <p>Our method allows to genreate infinite spatial fields of BRDF parameters without any border artefacts or 
+              repetitive patterns.</p>
+            
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered">Resynthesis</div>
+              <div class="column has-text-centered">Diffuse</div>
+              <div class="column has-text-centered">Specular</div>
+              <div class="column has-text-centered">Roughness</div>
+              <div class="column has-text-centered">Normal</div>
+            </div>
+            
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/shaded_000_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/diffuse_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/specular_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/roughness_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/2007/normal_0.jpg"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/shaded_000_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/diffuse_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/specular_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/roughness_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/plastic_red/normal_0.jpg"></div>
+            </div>
+
+            <div class="columns is-vcentered">
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/leather_antique/shaded_000_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/leather_antique/diffuse_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/leather_antique/specular_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/leather_antique/roughness_0.jpg"></div>
+              <div class="column has-text-centered"><img src="./static/demo/results/resynthesis/ours_fine/leather_antique/normal_0.jpg"></div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{henzler2021unsupervised,
+    title    = {Generative modelling of BRDF textures from flash images},
+    author     = {Henzler, Philipp and Deschaintre, Valentin and Mitra, Niloy J and Ritschel, Tobias},
+    journal   = {SIGGRAPH Asia},
+    year      = {2021},
+  }</code></pre>
+    </div>
+  </section>
+  
+  
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This template as borrowd from <a href="https://nerfies.github.io/">Nerfies</a>, <a href="https://reconfusion.github.io/">ReconFusion</a>, and <a href="https://cat3d.github.io/">CAT3D</a> 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
+
+
+  
+
+
+
+
